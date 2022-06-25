@@ -34,7 +34,7 @@ class DeliveryTest {
         $("[placeholder='Дата встречи']").setValue(firstMeetingDate);
         $("[data-test-id='name'] input").setValue(validUser.getName());
         $("[data-test-id=phone] input").setValue(validUser.getPhone());
-        $("[data-test-id=agreement]").click();
+        $("span.checkbox__box").click();
         $("button.button").click();
         $("[data-test-id=success-notification]").shouldBe(Condition.appear, Duration.ofSeconds(15));
         $(".notification__title").shouldHave(exactText("Успешно!"));
