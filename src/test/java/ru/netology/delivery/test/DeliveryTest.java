@@ -9,9 +9,7 @@ import ru.netology.delivery.data.DataGenerator;
 
 import java.time.Duration;
 
-import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
@@ -34,7 +32,7 @@ class DeliveryTest {
         $("[placeholder='Дата встречи']").setValue(firstMeetingDate);
         $("[data-test-id='name'] input").setValue(validUser.getName());
         $("[data-test-id=phone] input").setValue(validUser.getPhone());
-        $("span.checkbox__box").click();
+        $("[data-test-id=agreement]").click();
         $("button.button").click();
         $("[data-test-id=success-notification]").shouldBe(Condition.appear, Duration.ofSeconds(15));
         $(".notification__title").shouldHave(exactText("Успешно!"));
@@ -42,19 +40,9 @@ class DeliveryTest {
         // второй этап теста - перепланирование
         $("[data-test-id='date'] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
         $("[placeholder='Дата встречи']").setValue(secondMeetingDate);
-        $("[data-test-id=agreement]").click();
         $("button.button").click();
         $("span.button__text").shouldBe(Condition.appear, Duration.ofSeconds(15)).click();
         $(".notification__title").shouldHave(exactText("Успешно!"));
         $(".notification__content").shouldHave(Condition.text("Встреча успешно запланирована на " + secondMeetingDate), Duration.ofSeconds(15));
-
-
-
     }
-
-        // TODO: добавить логику теста в рамках которого будет выполнено планированиепланирование встречи.
-        // Для заполнения полей формы можно использовать пользователя validUser и строки с датами в переменных
-        // firstMeetingDate и secondMeetingDate. Можно также вызывать методы generateCity(locale),
-        // generateName(locale), generatePhone(locale) для генерации и получения в тесте соответственно города,
-        // имени и номера телефона без создания пользователя в методе generateUser(String locale) в датагенераторе
-    }
+}
